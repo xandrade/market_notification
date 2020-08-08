@@ -3,12 +3,12 @@ Stock Market Notification
 
 # Linux (Ubuntu-20.04) through WSL 2
 
-1. Go to the project folder, for example: `andrade@dell:/mnt/c/Users/andra$` `cd "/mnt/d/Dropbox/Python Projects/api_server"`
-2. Create virtual enviroment: `andrade@dell:/mnt/d/Dropbox/Python Projects/api_server$` `python3 -m venv .venv`
-3. Activte enviroment: `andrade@dell:/mnt/d/Dropbox/Python Projects/api_server$` `source .venv/bin/activate`
+1. Go to the project folder, for example: `andrade@dell:/mnt/c/Users/andra$` `cd "/mnt/d/Dropbox/Python Projects/market_notification"`
+2. Create virtual enviroment: `andrade@dell:/mnt/d/Dropbox/Python Projects/market_notification$` `python3 -m venv .venv`
+3. Activte enviroment: `andrade@dell:/mnt/d/Dropbox/Python Projects/market_notification$` `source .venv/bin/activate`
 4. After the virtual environment is active, we are going to want to ensure that a couple of essential Python packages within the virtual environment are up to date: `(.venv) andrade@dell:/mnt/d/Dropbox/Python Projects/api_server$` `pip install -U setuptools pip`
-5. Install the requirements: `(.venv) andrade@dell:/mnt/d/Dropbox/Python Projects/api_server$` `pip install quart`
-6. Open VSCode `(.venv) andrade@dell:/mnt/d/Dropbox/Python Projects/api_server$` `code .`
+5. Install the requirements: `(.venv) andrade@dell:/mnt/d/Dropbox/Python Projects/market_notification$` `pip install quart`
+6. Open VSCode `(.venv) andrade@dell:/mnt/d/Dropbox/Python Projects/market_notification$` `code .`
 
 # Docker
 
