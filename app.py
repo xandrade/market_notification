@@ -35,36 +35,29 @@ def nasdaq_market_open() -> bool:
     elif time(9, 30, 0, timezone('US/Eastern')) <= t <= time(4, 0, 0, timezone('US/Eastern')): return True  # Market is open
     else: return False
 
-
-
 """
 Push notifications
 curl https://notify.run/9rIXhJ9MVTZjzOBN -d "^NDX (1m) important volume change. %Change: 818.82, Diff: 162618, Volumes: (t-1) 19860, (t) 182478"
 """
+
 
 if __name__ == "__main__":
     
     s = sched.scheduler(time.time, time.sleep)
 
     def run_task(sc): 
-        
-        print("Running Task", datetime.now(), end='\r')
+        rc = ''
+        print(f"{datetime.now()}: Running task. {rc}", end='\r')
 
         ticker = '^NDX'
-        interval = '1m'
 
-        if not nasdaq_market_open():
+        if nasdaq_market_open():
 
             intervals = ('1m', '5m', '15m', '60m')
-            periods = ('3m', '15m', '45m', '3d')
+            periods = ('3m', '15m', '45m', '3h')
             tickers=('^NDX',)
 
             data_tickers = data.get_data(intervals=intervals)
-
-            x = data_tickers[ticker][interval].tail(2)
-            volumes = x['Volume'].values
-            volumes_diff = np.diff(volumes)
-            volumes_pct_change = np.diff(volumes) / volumes[:1] * 100
 
             for interval in intervals:
                 x = data_tickers[ticker][interval].tail(2)
@@ -72,14 +65,13 @@ if __name__ == "__main__":
                 volumes_diff = np.diff(volumes)
                 volumes_pct_change = np.diff(volumes) / volumes[:1] * 100
 
-                # print(x)
-                #if market_open():
-                if volumes_pct_change > 500 and volumes[-1] > 100000:
+                if np.absolute(volumes_pct_change) > 500 and np.absolute(volumes[-1]) >= 100000:
                     msg = f'{ticker} ({interval}) %Change: {volumes_pct_change.item() :.2f}, Diff: {volumes_diff.item()}, Volumes: (t-1) {volumes[0]}, (t) {volumes[1]}'
                     print(msg)
                     #notify.send(msg)
-
-        print("Last Run Time", datetime.now(), flush=True)
+        else:
+            rc = 'Market is closed'
+        print(f"{datetime.now()}: Last Run Time. {rc}", flush=True)
 
         s.enter(60, 1, run_task, (sc,))
 
